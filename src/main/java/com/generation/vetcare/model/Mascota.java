@@ -1,12 +1,20 @@
 package com.generation.vetcare.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "mascotas")
 public class Mascota {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String nombre;
     private String especie;
     private String raza;
     private Integer edad;
+    @Column(name = "nombre_dueno")
     private String nombreDueno;
 
     public Mascota() {
