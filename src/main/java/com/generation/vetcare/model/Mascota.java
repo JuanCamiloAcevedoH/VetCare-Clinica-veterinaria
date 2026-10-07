@@ -5,29 +5,34 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "mascotas")
 public class Mascota {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String nombre;
+    @Column(nullable = false)
     private String especie;
     private String raza;
-    private Integer edad;
-    @Column(name = "nombre_dueno")
-    private String nombreDueno;
+    private int edad;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dueno_id" , nullable = false)
+    private Dueno dueno;
+
 
     public Mascota() {
     }
 
-    public Mascota(Long id, String nombre, String especie, String raza, Integer edad, String nombreDueno) {
+    public Mascota(Long id, String nombre, String especie, String raza, int edad, Dueno dueno) {
         this.id = id;
         this.nombre = nombre;
         this.especie = especie;
         this.raza = raza;
         this.edad = edad;
-        this.nombreDueno = nombreDueno;
+        this.dueno = dueno;
     }
+
 
     public Long getId() {
         return id;
@@ -61,19 +66,15 @@ public class Mascota {
         this.raza = raza;
     }
 
-    public Integer getEdad() {
+    public int getEdad() {
         return edad;
     }
 
-    public void setEdad(Integer edad) {
+    public void setEdad(int edad) {
         this.edad = edad;
     }
 
     public String getNombreDueno() {
-        return nombreDueno;
-    }
-
-    public void setNombreDueno(String nombreDueno) {
-        this.nombreDueno = nombreDueno;
+        return dueno.getNombre();
     }
 }
